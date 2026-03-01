@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import './App.css'
+import { Input } from './components/Input'
+import { ShopCard } from './components/ShopCard';
 
 function App() {
   const [myName, setMyName] = useState('')
@@ -8,25 +10,18 @@ function App() {
   return (
     <main>
       <h1>NTV Vor 26</h1>
-
+      <div>{myName}</div>
       <div>
-        <input
-          type='text'
-          value={myName}
-          onChange={(e) => setMyName(e.target.value)}
-          placeholder='Nafn'
-        />
-
-        <input
-          type='email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder='Netfang'
-        />
-        
+        <Input value={myName} onChange={(e) => setMyName(e.target.value)} type={'String'}/>
+        <Input value={email} onChange={(e) => setEmail(e.target.value)} type={'email'}/>
         <button onClick={() => alert('Sent: ' + myName + '-' + email)}>
             Senda 
           </button>
+      </div>
+
+      <div>
+        {/*Card*/}
+        <ShopCard/>
       </div>
 
     </main>
