@@ -1,19 +1,19 @@
+type Props = {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type?: "text" | "email";
+};
 
-
-
-export function Input({ value, type, onChange }: {value: string, type: string; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void}) {
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        onChange(e);
-    }
-
-    return (
-        <input
-            type= {type}
-            value= {value}
-            onChange={(e) => handleChange(e)}
-            placeholder= {type}
-        />
-    ) 
-}
-
-
+export const Input = ({ value, onChange, type = "text" }: Props) => {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    onChange(e);
+  }
+  return (
+    <input
+      value={value}
+      onChange={(e) => handleChange(e)}
+      type={type}
+      placeholder="enter value.."
+    />
+  );
+};
