@@ -1,18 +1,22 @@
+import { useState } from "react";
 import "./App.css";
-
-import { ShopCard } from "./components/ShopCard";
 import { Form } from "./components/Form";
-import { ExtensiveForm } from "./components/ExtensiveForm";
+// import { ShopCard } from "./components/ShopCard";
+
 
 function App() {
+  const [state, setState] = useState(true)
   return (
-    <>
-      {/* <h1>NTV Vor 26</h1> */}
-
-      <div>
-        <ExtensiveForm />
-      </div>
-    </>
+    <div className="w-full justify-center">
+      <button onClick={() => {
+        setState(s => !s)
+      }}>Click</button>
+      {/* <ShopCard />
+      <ShopCard /> */}
+      {state &&
+        <Form />
+      }
+    </div>
   );
 }
 
