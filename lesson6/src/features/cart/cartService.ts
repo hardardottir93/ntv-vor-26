@@ -1,4 +1,4 @@
-import type { CartItem } from "@/types/cart.js";
+import type { CartItem } from "@/features/cart/types";
 
 const storageKey = "cart";
 
