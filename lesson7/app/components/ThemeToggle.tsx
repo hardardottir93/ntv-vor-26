@@ -1,53 +1,24 @@
-import { useEffect, useState } from 'react';
-
-type Theme = 'light' | 'dark';
-
-function getInitialTheme(): Theme {
-  if (typeof document === 'undefined') return 'light';
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light';
-}
-
-function applyTheme(theme: Theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-}
+import { useContext } from "react";
+import { ThemeContext } from "../root";
 
 export function ThemeToggle() {
-  const [theme, setThemeState] = useState<Theme>('light');
-  const [mounted, setMounted] = useState(false);
+  const context = useContext(ThemeContext);
 
-  useEffect(() => {
-    setThemeState(getInitialTheme());
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-    applyTheme(theme);
-  }, [theme, mounted]);
-
-  const toggle = () => {
-    setThemeState((t) => (t === 'light' ? 'dark' : 'light'));
-  };
-
-  if (!mounted) {
-    return (
-      <div className="theme-toggle" aria-hidden>
-        Toggle theme
-      </div>
-    );
+  if (!context) {
+    throw new Error("ThemeToggle must be used inside ThemeContext.Provider");
   }
+
+  const { theme, setTheme } = context;
 
   return (
     <button
       type="button"
       className="theme-toggle"
-      onClick={toggle}
-      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
-      title={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
+      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+      aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
+      title={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
     >
-      {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
+      {theme === "light" ? "🌙 Dark" : "☀️ Light"}
     </button>
   );
 }
