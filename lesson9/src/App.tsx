@@ -1,9 +1,9 @@
-import { Routes, Route } from 'react-router-dom';
-import './App.css';
-import { Layout } from '@/components/Layout';
-import { IndexPage } from './pages/IndexPage';
+import { Routes, Route } from "react-router-dom";
+import "./App.css";
+import { Layout } from "@/components/Layout";
+import { IndexPage } from "@/pages/IndexPage";
 
-function App() {
+export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -12,5 +12,3 @@ function App() {
     </Routes>
   );
 }
-
-export default App;
