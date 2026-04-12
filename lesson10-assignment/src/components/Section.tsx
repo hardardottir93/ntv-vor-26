@@ -4,16 +4,35 @@
 // 3. `bordered` is an optional boolean
 // 4. `background` only accepts 'none' | 'muted' | 'accent'
 // 5. All remaining native <section> props (className, id, aria-*, etc.) are forwarded and type-checked
-function Section({ title, children, bordered, background, className, ...props }: any) {
-  const bgStyles: any = {
-    none: '',
-    muted: 'bg-gray-50',
-    accent: 'bg-blue-50',
-  };
 
+const bgStyles = {
+  none: "",
+  muted: "bg-gray-50",
+  accent: "bg-blue-50",
+} as const;
+
+type SectionProps = {
+  title: string;
+  children?: React.ReactNode;
+  bordered?: boolean;
+  background?: keyof typeof bgStyles;
+  className?: string;
+} & Omit<
+  React.ComponentProps<"section">,
+  "className" | "children" | "title" | "bordered" | "background"
+>;
+
+function Section({
+  title,
+  children,
+  bordered,
+  background,
+  className,
+  ...props
+}: SectionProps) {
   return (
     <section
-      className={`${bordered ? 'rounded-lg border' : ''} ${bgStyles[background || 'none']} ${className || ''}`}
+      className={`${bordered ? "rounded-lg border" : ""} ${bgStyles[background || "none"]} ${className || ""}`}
       {...props}
     >
       <h2 className="mb-3 text-lg font-bold">{title}</h2>
