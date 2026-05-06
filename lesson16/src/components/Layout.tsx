@@ -1,22 +1,15 @@
-import type { AppPage } from '@/navigation';
-import type { ReactNode } from 'react';
+import { NavLink, Outlet } from "react-router-dom";
 
-type LayoutProps = {
-  activePage: AppPage;
-  onNavigate: (page: AppPage) => void;
-  children: ReactNode;
-};
-
-function navButtonClassName(isActive: boolean) {
+function navLinkClassName({ isActive }: { isActive: boolean }) {
   return [
-    'rounded-md px-3 py-2 text-sm font-medium transition-colors',
+    "rounded-md px-3 py-2 text-sm font-medium transition-colors",
     isActive
-      ? 'bg-primary text-primary-foreground'
-      : 'text-muted-foreground hover:bg-muted hover:text-foreground',
-  ].join(' ');
+      ? "bg-primary text-primary-foreground"
+      : "text-muted-foreground hover:bg-muted hover:text-foreground",
+  ].join(" ");
 }
 
-export function Layout({ activePage, onNavigate, children }: LayoutProps) {
+export function Layout() {
   return (
     <div className="bg-background min-h-screen">
       <header className="border-border bg-card/50 border-b backdrop-blur-sm">
@@ -25,24 +18,27 @@ export function Layout({ activePage, onNavigate, children }: LayoutProps) {
             Lesson 16
           </p>
           <nav className="flex flex-wrap gap-2" aria-label="Main navigation">
-            <button
-              type="button"
-              className={navButtonClassName(activePage === 'home')}
-              onClick={() => onNavigate('home')}
-            >
+            <NavLink to="/" className={navLinkClassName}>
               Home
-            </button>
-            <button
-              type="button"
-              className={navButtonClassName(activePage === 'about')}
-              onClick={() => onNavigate('about')}
-            >
+            </NavLink>
+
+            <NavLink to="/about" className={navLinkClassName}>
               About
-            </button>
+            </NavLink>
+
+            <NavLink to="/dashboard" className={navLinkClassName}>
+              Dashboard
+            </NavLink>
+
+            <NavLink to="/login" className={navLinkClassName}>
+              Login
+            </NavLink>
           </nav>
         </div>
       </header>
-      <main className="mx-auto w-full max-w-6xl px-4 py-8">{children}</main>
+      <main className="mx-auto w-full max-w-6xl px-4 py-8">
+        <Outlet />
+      </main>
     </div>
   );
 }
