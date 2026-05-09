@@ -1,12 +1,12 @@
-import './App.css';
-import { Layout } from '@/components/Layout';
-import { ProtectedRoute } from '@/components/ProtectedRoute';
-import { ROUTES } from '@/navigation';
-import { AboutPage } from '@/pages/AboutPage';
-import { DashboardPage } from '@/pages/DashboardPage';
-import { HomePage } from '@/pages/HomePage';
-import { LoginPage } from '@/pages/LoginPage';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import "./App.css";
+import { Layout } from "@/components/Layout";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { ROUTES } from "@/navigation";
+import { AboutPage } from "@/pages/AboutPage";
+import { DashboardPage } from "@/pages/DashboardPage";
+import { HomePage } from "@/pages/HomePage";
+import { LoginPage } from "@/pages/LoginPage";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
