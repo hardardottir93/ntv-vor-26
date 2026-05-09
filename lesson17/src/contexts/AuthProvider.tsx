@@ -1,11 +1,11 @@
-import { AuthContext, type AuthContextValue } from '@/contexts/auth-context';
-import { useCallback, useMemo, useState, type ReactNode } from 'react';
+import { useCallback, useMemo, useState, type ReactNode } from "react";
+import { AuthContext, type AuthContextValue } from "./auth-context";
 
-const STORAGE_KEY = 'lesson16-authenticated';
+const STORAGE_KEY = "lesson16-authenticated";
 
 function readStoredAuth(): boolean {
   try {
-    return sessionStorage.getItem(STORAGE_KEY) === '1';
+    return sessionStorage.getItem(STORAGE_KEY) === "1";
   } catch {
     return false;
   }
@@ -16,7 +16,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = useCallback(() => {
     try {
-      sessionStorage.setItem(STORAGE_KEY, '1');
+      sessionStorage.setItem(STORAGE_KEY, "1");
     } catch {
       /* ignore */
     }

@@ -1,32 +1,37 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useAuth } from '@/contexts/auth-context';
-import { loginFormSchema } from '@/lib/login-schema';
-import { ROUTES } from '@/navigation';
-import { useState, type FormEvent } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { loginFormSchema } from "@/lib/login-schema";
+import { ROUTES } from "@/navigation";
+import { useState, type FormEvent } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  Show,
+  SignIn,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/react";
 
 type LoginLocationState = { from?: { pathname: string } };
 
-type FieldErrors = Partial<Record<'username' | 'password', string>>;
+type FieldErrors = Partial<Record<"username" | "password", string>>;
 
 export function LoginPage() {
-  const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as LoginLocationState | null;
   const from = state?.from?.pathname ?? ROUTES.dashboard;
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -43,7 +48,6 @@ export function LoginPage() {
     }
 
     setFieldErrors({});
-    login();
     navigate(from, { replace: true });
   }
 
@@ -53,8 +57,8 @@ export function LoginPage() {
         <CardHeader>
           <CardTitle className="text-2xl">Log in</CardTitle>
           <CardDescription>
-            Enter any username and password that pass validation. After login you
-            can open the protected{' '}
+            Enter any username and password that pass validation. After login
+            you can open the protected{" "}
             <Link
               to={ROUTES.dashboard}
               className="text-primary font-medium underline-offset-4 hover:underline"
@@ -77,12 +81,15 @@ export function LoginPage() {
                 onChange={(e) => {
                   setUsername(e.target.value);
                   if (fieldErrors.username) {
-                    setFieldErrors((prev) => ({ ...prev, username: undefined }));
+                    setFieldErrors((prev) => ({
+                      ...prev,
+                      username: undefined,
+                    }));
                   }
                 }}
                 aria-invalid={Boolean(fieldErrors.username)}
                 aria-describedby={
-                  fieldErrors.username ? 'login-username-error' : undefined
+                  fieldErrors.username ? "login-username-error" : undefined
                 }
               />
               {fieldErrors.username ? (
@@ -106,12 +113,15 @@ export function LoginPage() {
                 onChange={(e) => {
                   setPassword(e.target.value);
                   if (fieldErrors.password) {
-                    setFieldErrors((prev) => ({ ...prev, password: undefined }));
+                    setFieldErrors((prev) => ({
+                      ...prev,
+                      password: undefined,
+                    }));
                   }
                 }}
                 aria-invalid={Boolean(fieldErrors.password)}
                 aria-describedby={
-                  fieldErrors.password ? 'login-password-error' : undefined
+                  fieldErrors.password ? "login-password-error" : undefined
                 }
               />
               {fieldErrors.password ? (
@@ -130,6 +140,21 @@ export function LoginPage() {
           </form>
         </CardContent>
       </Card>
+
+      <header>
+        <Show when="signed-out">
+          <SignInButton>
+            <Button style={{ backgroundColor: "black" }}>Sign In</Button>
+          </SignInButton>
+          <SignUpButton>
+            <Button style={{ backgroundColor: "black" }}>Sign Up</Button>
+          </SignUpButton>
+        </Show>
+        <Show when="signed-in">
+          <UserButton />
+        </Show>
+      </header>
+      <SignIn />
     </div>
   );
 }

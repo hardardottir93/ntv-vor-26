@@ -1,10 +1,10 @@
-import { Button } from '@/components/ui/button';
-import { useAuth } from '@/contexts/auth-context';
-import { ROUTES } from '@/navigation';
-import { Link, Outlet } from 'react-router-dom';
+import { Button } from "@/components/ui/button";
+import { ROUTES } from "@/navigation";
+import { useAuth } from "@clerk/react";
+import { Link, Outlet } from "react-router-dom";
 
 export function Layout() {
-  const { isAuthenticated, logout } = useAuth();
+  const { isSignedIn, signOut } = useAuth();
 
   return (
     <div className="bg-background min-h-screen">
@@ -13,20 +13,28 @@ export function Layout() {
           <p className="text-foreground text-sm font-semibold tracking-tight">
             Lesson 16
           </p>
-          <nav className="flex flex-wrap items-center gap-2" aria-label="Main navigation">
+          <nav
+            className="flex flex-wrap items-center gap-2"
+            aria-label="Main navigation"
+          >
             <Button variant="ghost" size="sm" asChild>
               <Link to={ROUTES.home}>Home</Link>
             </Button>
             <Button variant="ghost" size="sm" asChild>
               <Link to={ROUTES.about}>About</Link>
             </Button>
-            {isAuthenticated ? (
+            {isSignedIn ? (
               <Button variant="ghost" size="sm" asChild>
                 <Link to={ROUTES.dashboard}>Dashboard</Link>
               </Button>
             ) : null}
-            {isAuthenticated ? (
-              <Button variant="ghost" size="sm" type="button" onClick={() => logout()}>
+            {isSignedIn ? (
+              <Button
+                variant="ghost"
+                size="sm"
+                type="button"
+                onClick={() => signOut()}
+              >
                 Log out
               </Button>
             ) : (
